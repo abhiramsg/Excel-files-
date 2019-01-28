@@ -1,0 +1,15 @@
+Option Explicit
+
+Private pasteresult()
+  Application.ScreenUpdating = False
+  Dim copySheet As Worksheet
+  Dim pasteSheet As Worksheet
+
+  Set copySheet = Worksheets("Sheet2")
+  Set pasteSheet = Worksheets("Sheet1")
+
+  copySheet.Range("A3:E3").Copy
+  pasteSheet.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).PasteSpecial xlPasteValues
+  Application.CutCopyMode = False
+  Application.ScreenUpdating = True
+End Sub
