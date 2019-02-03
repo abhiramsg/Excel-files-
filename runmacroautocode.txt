@@ -1,0 +1,32 @@
+
+Sub test()
+MsgBox "This is a test"
+End Sub
+
+Sub cell()
+Dim R As Range
+Dim P As Variant
+Set R = Sheets(1).Range("A3")
+P = Sheets(1).Range("A2").Value
+R.Value = P
+If R = "Yes" Then
+Call test
+End If
+End Sub
+==========================
+Option Explicit
+
+Sub Macro1()
+'
+' Macro1 Macro
+'
+' Keyboard Shortcut: Ctrl+Shift+L
+'
+    Rows("19:19").Select
+    Selection.Insert Shift:=xlDown
+    Range("C14:H14").Select
+    Selection.Copy
+    Range("C19").Select
+    ActiveSheet.Paste
+End Sub
+========================================
