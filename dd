@@ -1,0 +1,58 @@
+Sub Movebothdup()
+    Dim myList As New Collection
+    Dim myCell, myarray, myObject, iRow As Long
+    Dim myKey As String
+    For Each myCell In Range("A1", Cells(Rows.Count, 1).End(xlUp))
+        If Not myCell.Value = vbNullString Then
+            myKey = myCell.Value
+            myarray = Array(myCell.Value, 1)
+            On Error Resume Next
+            myList.Add Item:=myarray, Key:=myKey
+            If Err.Number = 457 Then
+                On Error GoTo 0
+                myObject = myList.Item(myKey)
+                myObject(1) = myObject(1) + 1
+                myList.Remove myKey
+                myList.Add Item:=Array(myObject(0), myObject(1)), Key:=myKey
+            End If
+        End If
+    Next myCell
+
+    For iRow = Cells(Rows.Count, 1).End(xlUp).Row To 1 Step -1
+
+        If Not Cells(iRow, 1).Value = vbNullString Then
+            myKey = Cells(iRow, 1).Value
+            On Error Resume Next
+            myList.Add Item:=myKey, Key:=myKey
+            If Err.Number = 457 Then
+                On Error GoTo 0
+                myObject = myList.Item(myKey)
+                If myObject(1) > 1 Then Rows(iRow).EntireRow.Cut Destination:=Worksheets("Duplicates").Range("A" & iRow)
+            
+                Application.CutCopyMode = False
+                
+            End If
+        End If
+    Next iRow
+End Sub
+
+
+
+
+Sub UniqueLstdate()
+
+    Dim xRng As Range
+    Dim xTxt As String
+    On Error Resume Next
+    Call sleeptil
+    xTxt = Application.ActiveWindow.RangeSelection.Address
+  Set xRng = Sheets("Duplicates").Range("A:B")
+    If xRng Is Nothing Then Exit Sub
+    If (xRng.Columns.Count < 2) Or (xRng.Rows.Count < 2) Then
+     
+        Exit Sub
+    End If
+    xRng.Sort key1:=xRng.Cells(1, 1), Order1:=xlAscending, key2:=xRng.Cells(1, 2), Order2:=xlDescending, Header:=xlGuess
+    xRng.RemoveDuplicates Columns:=1, Header:=xlGuess
+
+End Sub
