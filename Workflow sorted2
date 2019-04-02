@@ -1,0 +1,909 @@
+Option Explicit =============DB COnnection
+Dim objConn As Object
+Public Function fnDBConnect() As Object
+    
+    Dim strConn As String
+    Dim strDBName As String
+    
+    Set objConn = CreateObject("ADODB.Connection")
+   strDBName = "C:\NotBackedUp\Backend Databse\BLR_AU_EC_Database_be.accdb"
+    'strDBName = "\\Svrau100qsm00\otspm grppo\SHARE\GSO Projects\Projects\GTIR\5.2 GTIR CoE\10. GTIR CRS DS (Restricted)\1. Data Team (Restricted)\1.2 EC Teams\1.2.1 AU EC Team\AU EC Macro\BLR_AU_EC_Database\BLR_AU_EC_Database.accdb"
+    strConn = "Provider=Microsoft.ACE.OLEDB.12.0; Data Source=" & strDBName & ";"
+    
+    objConn.Open strConn
+    
+    Set fnDBConnect = objConn
+    
+End Function
+
+Public Sub fnCloseDBConnection()
+    
+    If Not objConn Is Nothing Then
+        objConn.Close
+        Set objConn = Nothing
+    End If
+End Sub
+
+===================================================================================
+Option Explicit
+
+Public Sub fnCaseStatus()
+    
+    Dim objXL As Object
+    Dim objCmbCaseStatus As Object
+    
+    Dim lrInput As Long
+    Dim i As Long
+     
+    Set objXL = ThisWorkbook.Worksheets("MetaData")
+    Set objCmbCaseStatus = frmNewCase.cmbCaseStatus
+    
+    lrInput = objXL.Cells(objXL.Rows.Count, 1).End(xlUp).Row
+    
+    For i = 2 To lrInput
+        objCmbCaseStatus.AddItem Trim(objXL.Range("A" & i).Text)
+    Next i
+        
+    Set objCmbCaseStatus = Nothing
+    Set objXL = Nothing
+        
+End Sub
+
+Public Sub fnResolvedComments()
+    
+    Dim objXL As Object
+    Dim objCmbReason As Object
+    
+    Dim lrInput As Long
+    Dim i As Long
+     
+    Set objXL = ThisWorkbook.Worksheets("MetaData")
+    Set objCmbReason = frmNewCase.cmbEscalationReason
+    
+    lrInput = objXL.Cells(objXL.Rows.Count, 2).End(xlUp).Row
+    
+    For i = 2 To lrInput
+        objCmbReason.AddItem objXL.Range("B" & i).Value
+    Next i
+    
+    Set objCmbReason = Nothing
+    Set objXL = Nothing
+    
+End Sub
+
+Public Sub fnEscalationType()
+    
+    Dim objXL As Object
+    Dim objCmbEscalationType As Object
+    Dim objCmbEscalationReason As Object
+    
+    Dim lrInput As Long
+    Dim i As Long
+    
+    
+    Set objXL = ThisWorkbook.Worksheets("MetaData")
+    Set objCmbEscalationType = frmNewCase.cmbEscalationType
+    Set objCmbEscalationReason = frmNewCase.cmbEscalationReason
+    
+    lrInput = objXL.Cells(objXL.Rows.Count, 4).End(xlUp).Row
+    
+    For i = 2 To lrInput
+        objCmbEscalationType.AddItem objXL.Range("D" & i).Text
+    Next i
+    
+  
+    
+    Set objCmbEscalationType = Nothing
+    Set objXL = Nothing
+    
+End Sub
+
+Public Sub fnEscalationReason()
+    
+    Dim objXL As Object
+    Dim objCmbEscalationType As Object
+    Dim objCmbEscalationReason As Object
+    
+    Dim lrInput As Long
+    Dim i As Long
+    
+    Dim index As Integer
+    
+    Set objXL = ThisWorkbook.Worksheets("MetaData")
+    Set objCmbEscalationType = frmNewCase.cmbEscalationType
+    Set objCmbEscalationReason = frmNewCase.cmbEscalationReason
+    
+    index = objCmbEscalationType.ListIndex
+    
+    Select Case index
+        
+        Case 0
+            lrInput = objXL.Cells(objXL.Rows.Count, 5).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("E" & i).Value
+            Next i
+            
+        Case 1
+            lrInput = objXL.Cells(objXL.Rows.Count, 6).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("F" & i).Value
+            Next i
+            
+        Case 2
+            lrInput = objXL.Cells(objXL.Rows.Count, 7).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("G" & i).Value
+            Next i
+            
+        Case 3
+            lrInput = objXL.Cells(objXL.Rows.Count, 8).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("H" & i).Value
+            Next i
+            
+        Case 4
+            lrInput = objXL.Cells(objXL.Rows.Count, 9).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("I" & i).Value
+            Next i
+            
+        Case 5
+            lrInput = objXL.Cells(objXL.Rows.Count, 10).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("J" & i).Value
+            Next i
+            
+        Case 6
+            lrInput = objXL.Cells(objXL.Rows.Count, 11).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("K" & i).Value
+            Next i
+            
+        Case 7
+            lrInput = objXL.Cells(objXL.Rows.Count, 12).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("L" & i).Value
+            Next i
+            
+        Case 8
+            lrInput = objXL.Cells(objXL.Rows.Count, 13).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("M" & i).Value
+            Next i
+            
+        Case 9
+            lrInput = objXL.Cells(objXL.Rows.Count, 14).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("N" & i).Value
+            Next i
+            
+        Case 10
+            lrInput = objXL.Cells(objXL.Rows.Count, 15).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("O" & i).Value
+            Next i
+            
+    End Select
+    
+    Set objCmbEscalationType = Nothing
+    Set objCmbEscalationReason = Nothing
+    Set objXL = Nothing
+End Sub
+Public Sub fnOnHoldComments()
+    
+    Dim objXL As Object
+    Dim objCmbReason As Object
+    
+    Dim lrInput As Long
+    Dim i As Long
+     
+    Set objXL = ThisWorkbook.Worksheets("MetaData")
+    Set objCmbReason = frmNewCase.cmbEscalationReason
+    
+    lrInput = objXL.Cells(objXL.Rows.Count, 3).End(xlUp).Row
+    
+    For i = 2 To lrInput
+        objCmbReason.AddItem objXL.Range("C" & i).Value
+    Next i
+    
+    Set objCmbReason = Nothing
+    Set objXL = Nothing
+    
+End Sub
+
+Public Sub fnFollowUpComments()
+    
+    Dim objXL As Object
+    Dim objCmbReason As Object
+    
+    Dim lrInput As Long
+    Dim i As Long
+     
+    Set objXL = ThisWorkbook.Worksheets("MetaData")
+    Set objCmbReason = frmNewCase.cmbEscalationReason
+    
+    lrInput = objXL.Cells(objXL.Rows.Count, 16).End(xlUp).Row
+    
+    For i = 2 To lrInput
+        objCmbReason.AddItem objXL.Range("P" & i).Value
+    Next i
+    
+    Set objCmbReason = Nothing
+    Set objXL = Nothing
+    
+End Sub
+
+Public Sub fnCaseStatusUpdate()
+
+    Dim objXL As Object
+    Dim objCmbCaseStatus As Object
+
+    Dim lrInput As Long
+    Dim i As Long
+
+    Set objXL = ThisWorkbook.Worksheets("MetaData")
+    Set objCmbCaseStatus = frmUpdateCase.cmbCaseStatusUpdate
+
+    lrInput = objXL.Cells(objXL.Rows.Count, 1).End(xlUp).Row
+
+    For i = 2 To lrInput
+        objCmbCaseStatus.AddItem objXL.Range("A" & i).Value
+    Next i
+
+    Set objCmbCaseStatus = Nothing
+    Set objXL = Nothing
+
+End Sub
+
+Public Sub fnResolvedCommentsUpdate()
+
+    Dim objXL As Object
+    Dim objCmbReason As Object
+
+    Dim lrInput As Long
+    Dim i As Long
+
+    Set objXL = ThisWorkbook.Worksheets("MetaData")
+    Set objCmbReason = frmUpdateCase.cmbEscalationReasonUpdate
+
+    lrInput = objXL.Cells(objXL.Rows.Count, 2).End(xlUp).Row
+    
+    objCmbReason.Value = vbNullString
+    For i = 2 To lrInput
+        objCmbReason.AddItem objXL.Range("B" & i).Value
+    Next i
+
+    Set objCmbReason = Nothing
+    Set objXL = Nothing
+
+End Sub
+
+Public Sub fnEscalationTypeUpdate()
+
+    Dim objXL As Object
+    Dim objCmbEscalationType As Object
+    Dim objCmbEscalationReason As Object
+
+    Dim lrInput As Long
+    Dim i As Long
+
+
+    Set objXL = ThisWorkbook.Worksheets("MetaData")
+    Set objCmbEscalationType = frmUpdateCase.cmbEscalationTypeUpdate
+    Set objCmbEscalationReason = frmUpdateCase.cmbEscalationReasonUpdate
+
+    lrInput = objXL.Cells(objXL.Rows.Count, 4).End(xlUp).Row
+    
+    objCmbEscalationType.Value = vbNullString
+    objCmbEscalationReason.Value = vbNullString
+    For i = 2 To lrInput
+        objCmbEscalationType.AddItem objXL.Range("D" & i).Value
+    Next i
+
+    Set objCmbEscalationType = Nothing
+    Set objXL = Nothing
+
+End Sub
+
+Public Sub fnEscalationReasonUpdate()
+
+    Dim objXL As Object
+    Dim objCmbEscalationType As Object
+    Dim objCmbEscalationReason As Object
+
+    Dim lrInput As Long
+    Dim i As Long
+
+    Dim index As Integer
+
+    Set objXL = ThisWorkbook.Worksheets("MetaData")
+    Set objCmbEscalationType = frmUpdateCase.cmbEscalationTypeUpdate
+    Set objCmbEscalationReason = frmUpdateCase.cmbEscalationReasonUpdate
+
+    index = objCmbEscalationType.ListIndex
+    objCmbEscalationReason.Value = vbNullString
+    Select Case index
+
+        Case 0
+            lrInput = objXL.Cells(objXL.Rows.Count, 5).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("E" & i).Value
+            Next i
+
+        Case 1
+            lrInput = objXL.Cells(objXL.Rows.Count, 6).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("F" & i).Value
+            Next i
+
+        Case 2
+            lrInput = objXL.Cells(objXL.Rows.Count, 7).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("G" & i).Value
+            Next i
+
+        Case 3
+            lrInput = objXL.Cells(objXL.Rows.Count, 8).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("H" & i).Value
+            Next i
+
+        Case 4
+            lrInput = objXL.Cells(objXL.Rows.Count, 9).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("I" & i).Value
+            Next i
+
+        Case 5
+            lrInput = objXL.Cells(objXL.Rows.Count, 10).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("J" & i).Value
+            Next i
+
+        Case 6
+            lrInput = objXL.Cells(objXL.Rows.Count, 11).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("K" & i).Value
+            Next i
+
+        Case 7
+            lrInput = objXL.Cells(objXL.Rows.Count, 12).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("L" & i).Value
+            Next i
+
+        Case 8
+            lrInput = objXL.Cells(objXL.Rows.Count, 13).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("M" & i).Value
+            Next i
+
+        Case 9
+            lrInput = objXL.Cells(objXL.Rows.Count, 14).End(xlUp).Row
+            For i = 3 To lrInput
+                objCmbEscalationReason.AddItem objXL.Range("N" & i).Value
+            Next i
+
+    End Select
+
+    Set objCmbEscalationType = Nothing
+    Set objCmbEscalationReason = Nothing
+    Set objXL = Nothing
+End Sub
+Public Sub fnOnHoldCommentsUpdate()
+
+    Dim objXL As Object
+    Dim objCmbReason As Object
+
+    Dim lrInput As Long
+    Dim i As Long
+
+    Set objXL = ThisWorkbook.Worksheets("MetaData")
+    Set objCmbReason = frmUpdateCase.cmbEscalationReasonUpdate
+
+    lrInput = objXL.Cells(objXL.Rows.Count, 3).End(xlUp).Row
+    objCmbReason.Value = vbNullString
+    For i = 2 To lrInput
+        objCmbReason.AddItem objXL.Range("C" & i).Value
+    Next i
+
+    Set objCmbReason = Nothing
+    Set objXL = Nothing
+
+End Sub
+
+Public Sub fnFollowUpCommentsUpdate()
+    
+    Dim objXL As Object
+    Dim objCmbReason As Object
+    
+    Dim lrInput As Long
+    Dim i As Long
+     
+    Set objXL = ThisWorkbook.Worksheets("MetaData")
+    Set objCmbReason = frmUpdateCase.cmbEscalationReasonUpdate
+    
+    lrInput = objXL.Cells(objXL.Rows.Count, 16).End(xlUp).Row
+    objCmbReason.Value = vbNullString
+    For i = 2 To lrInput
+        objCmbReason.AddItem objXL.Range("P" & i).Value
+    Next i
+    
+    Set objCmbReason = Nothing
+    Set objXL = Nothing
+    
+End Sub
+
+=================================================================================GEt case details
+Option Explicit
+Dim strAllocationTable As String
+Dim strCaseStatusTable As String
+Dim strResourceName As String
+Dim intStatusCnt As Integer
+
+Public Function fnGetCaseDeatails() As Variant
+    
+    Dim objConn As Object
+    Dim objRs As Object
+
+    Dim strSelectCustDetailsQuery As String
+    Dim strSelectStatusQuery As String
+    Dim strCustomerID As String
+    
+    Dim varCustomerID As Variant
+    
+    Set objConn = fnDBConnect
+    Set objRs = CreateObject("ADODB.Recordset")
+    strAllocationTable = "AU_EC_Allocation"
+    strCaseStatusTable = "AU_EC_Case_Status_Details"
+    
+    strResourceName = Trim(FullName)
+    
+    If StrComp(ThisWorkbook.Worksheets(1).cmbWorkingFile, "Converga") = 0 Then
+            strCustomerID = "SELECT AU_EC_Allocation.Customer_ID FROM " & strAllocationTable & " LEFT JOIN " & strCaseStatusTable & " ON AU_EC_Allocation.Allocation_ID = AU_EC_Case_Status_Details.Allocation_ID WHERE AU_EC_Allocation.Status='Allocated' AND AU_EC_Allocation.Resource_Name='" & strResourceName & "' AND AU_EC_Allocation.Source='Converga'AND AU_EC_Case_Status_Details.Allocation_ID IS null;"
+    ElseIf StrComp(ThisWorkbook.Worksheets(1).cmbWorkingFile, "Mailbox") = 0 Then
+            strCustomerID = "SELECT AU_EC_Allocation.Customer_ID FROM " & strAllocationTable & " LEFT JOIN " & strCaseStatusTable & " ON AU_EC_Allocation.Allocation_ID = AU_EC_Case_Status_Details.Allocation_ID WHERE AU_EC_Allocation.Status='Allocated' AND AU_EC_Allocation.Resource_Name='" & strResourceName & "' AND AU_EC_Allocation.Source='Mailbox' AND AU_EC_Case_Status_Details.Allocation_ID IS null;"
+    Else
+        MsgBox "Please Select Source.", vbExclamation, "Source"
+        Exit Function
+    End If
+    
+    objRs.Open strCustomerID, objConn
+    If objRs.EOF Then
+        fnGetCaseDeatails = Empty
+        Exit Function
+    Else
+        varCustomerID = objRs.getrows
+        frmNewCase.txtPendingCases.Value = UBound(varCustomerID, 2) + 1
+    End If
+    objRs.Close
+    
+    strSelectCustDetailsQuery = "SELECT AU_EC_Allocation.Allocation_ID,AU_EC_Allocation.Source,AU_EC_Allocation.File_Name,AU_EC_Allocation.Received_Date,AU_EC_Allocation.Customer_ID,AU_EC_Allocation.ASW_Case_ID,AU_EC_Allocation.Case_Reason_Code FROM " & strAllocationTable & " LEFT JOIN " & strCaseStatusTable & " ON AU_EC_Allocation.Allocation_ID = AU_EC_Case_Status_Details.Allocation_ID WHERE AU_EC_Allocation.Status='Allocated' AND AU_EC_Allocation.Resource_Name='" & strResourceName & "' AND AU_EC_Allocation.Customer_ID='" & varCustomerID(0, 0) & "' AND AU_EC_Case_Status_Details.Allocation_ID IS null;"
+    objRs.Open strSelectCustDetailsQuery, objConn
+    
+    If objRs.EOF Then
+        fnGetCaseDeatails = Empty
+    Else
+        fnGetCaseDeatails = objRs.getrows
+        objRs.Close
+    End If
+    
+    fnCloseDBConnection
+    Set objRs = Nothing
+    Set objConn = Nothing
+    
+End Function
+
+Public Function fnGetSkippedCases() As Variant
+    
+    Dim strSelectSkippedCustDetailsQuery As String
+    Dim strSkippedCustomerId As String
+    
+    Dim varCustomerID As Variant
+    
+    Dim objConn As Object
+    Dim objRs As Object
+    
+    Set objConn = fnDBConnect
+    Set objRs = CreateObject("ADODB.Recordset")
+    
+    If StrComp(ThisWorkbook.Worksheets(1).cmbWorkingFile, "Converga") = 0 Then
+            strSkippedCustomerId = "SELECT AU_EC_Allocation.Customer_ID FROM " & strAllocationTable & " LEFT JOIN " & strCaseStatusTable & " ON AU_EC_Allocation.Allocation_ID = AU_EC_Case_Status_Details.Allocation_ID WHERE AU_EC_Allocation.Status='Skipped' AND AU_EC_Allocation.Resource_Name='" & strResourceName & "' AND AU_EC_Allocation.Source='Converga'AND AU_EC_Case_Status_Details.Allocation_ID IS null;"
+    Else
+            strSkippedCustomerId = "SELECT AU_EC_Allocation.Customer_ID FROM " & strAllocationTable & " LEFT JOIN " & strCaseStatusTable & " ON AU_EC_Allocation.Allocation_ID = AU_EC_Case_Status_Details.Allocation_ID WHERE AU_EC_Allocation.Status='Skipped' AND AU_EC_Allocation.Resource_Name='" & strResourceName & "' AND AU_EC_Allocation.Source='Mailbox' AND AU_EC_Case_Status_Details.Allocation_ID IS null;"
+    End If
+    
+    objRs.Open strSkippedCustomerId, objConn
+    If objRs.EOF Then
+        fnGetSkippedCases = Empty
+        Exit Function
+    Else
+        varCustomerID = objRs.getrows
+        frmNewCase.txtSkipCases.Value = UBound(varCustomerID, 2) + 1
+    End If
+    objRs.Close
+    
+    strSelectSkippedCustDetailsQuery = "SELECT AU_EC_Allocation.Allocation_ID,AU_EC_Allocation.Source,AU_EC_Allocation.File_Name,AU_EC_Allocation.Received_Date,AU_EC_Allocation.Customer_ID,AU_EC_Allocation.ASW_Case_ID,AU_EC_Allocation.Case_Reason_Code FROM " & strAllocationTable & " LEFT JOIN " & strCaseStatusTable & " ON AU_EC_Allocation.Allocation_ID = AU_EC_Case_Status_Details.Allocation_ID WHERE AU_EC_Allocation.Status='Skipped' AND AU_EC_Allocation.Resource_Name='" & strResourceName & "' AND AU_EC_Allocation.Customer_ID='" & varCustomerID(0, 0) & "' AND AU_EC_Case_Status_Details.Allocation_ID IS null;"
+    objRs.Open strSelectSkippedCustDetailsQuery, objConn
+    
+    If objRs.EOF Then
+        fnGetSkippedCases = Empty
+        objRs.Close
+    Else
+        fnGetSkippedCases = objRs.getrows
+        objRs.Close
+    End If
+    
+    fnCloseDBConnection
+    Set objRs = Nothing
+    Set objConn = Nothing
+
+End Function
+
+Public Function fnGetUpdateCaseDeatails() As Variant
+
+     Dim objConn As Object
+    Dim objRs As Object
+
+    Dim strSelectCustDetailsQuery As String
+    Dim strUpdateStatusQuery As String
+    Dim strCustomerID As String
+    Dim strPegaCaseId As String
+    
+    Dim varCustomerDetails As Variant
+    
+    Set objConn = fnDBConnect
+    Set objRs = CreateObject("ADODB.Recordset")
+    strAllocationTable = "AU_EC_Allocation"
+    strCaseStatusTable = "AU_EC_Case_Status_Details"
+    
+    strResourceName = Trim(FullName)
+    strPegaCaseId = Trim(frmExistingCase.txtPegaCaseID)
+    
+    If IsNumeric(frmExistingCase.txtCustomerID) = True Then
+        strCustomerID = "CAPAU" + Trim(frmExistingCase.txtCustomerID)
+    Else
+        strCustomerID = Trim(frmExistingCase.txtCustomerID)
+    End If
+
+    strSelectCustDetailsQuery = "SELECT AU_EC_Allocation.Allocation_ID,AU_EC_Allocation.Source,AU_EC_Allocation.File_Name,AU_EC_Allocation.Received_Date,AU_EC_Allocation.Customer_ID,AU_EC_Allocation.ASW_Case_ID,AU_EC_Allocation.Case_Reason_Code,AU_EC_Allocation.Status,AU_EC_Case_Status_Details.ASW_Case_Status,AU_EC_Case_Status_Details.Siebel_Upload_Status,AU_EC_Case_Status_Details.Reason_For_Escalation_OnHold,AU_EC_Case_Status_Details.Comments,AU_EC_Case_Status_Details.Explanation_For_TAX_Reason_Z FROM " & strAllocationTable & " LEFT JOIN AU_EC_Case_Status_Details ON AU_EC_Allocation.Allocation_ID = AU_EC_Case_Status_Details.Allocation_ID WHERE AU_EC_Allocation.Status IS NOT null AND AU_EC_Allocation.Customer_ID='" & strCustomerID & "' AND AU_EC_Allocation.ASW_Case_ID='" & strPegaCaseId & "';"
+    objRs.Open strSelectCustDetailsQuery, objConn
+    
+    If objRs.EOF Then
+        varCustomerDetails = Empty
+    Else
+        varCustomerDetails = objRs.getrows
+        objRs.Close
+        
+        If StrComp(LCase(varCustomerDetails(7, 0)), LCase("skipped")) = 0 Then
+            strUpdateStatusQuery = "UPDATE " & strAllocationTable & " SET Status='Allocated' WHERE Status='Skipped' AND Customer_ID='" & strCustomerID & "' AND AU_EC_Allocation.ASW_Case_ID='" & strPegaCaseId & "';"
+            objRs.Open strUpdateStatusQuery, objConn
+        End If
+        
+    End If
+    
+    fnGetUpdateCaseDeatails = varCustomerDetails
+    fnCloseDBConnection
+    Set objRs = Nothing
+    Set objConn = Nothing
+
+End Function
+===============================================================skipcase
+Option Explicit
+
+Public Function fnSkipCase(strFileName As String, strCustomerID As String) As Integer
+        
+    Dim objConn As Object
+    Dim objRs As Object
+    
+    Dim strAllocationTable As String
+    Dim strCaseStatusTable As String
+    Dim strUpdateStatusQuery As String
+    Dim strCountQuery As String
+    Dim strResourceName As String
+
+    Set objConn = fnDBConnect
+    Set objRs = CreateObject("ADODB.Recordset")
+    strAllocationTable = "AU_EC_Allocation"
+    strCaseStatusTable = "AU_EC_Case_Status_Details"
+    strResourceName = FullName
+    
+    strUpdateStatusQuery = "UPDATE " & strAllocationTable & " LEFT JOIN " & strCaseStatusTable & " ON AU_EC_Allocation.Allocation_ID = AU_EC_Case_Status_Details.Allocation_ID SET AU_EC_Allocation.Status='Skipped' WHERE AU_EC_Allocation.Status='Allocated' AND AU_EC_Allocation.Resource_Name='" & strResourceName & "' AND AU_EC_Case_Status_Details.Allocation_ID IS null AND Customer_ID='" & strCustomerID & "';"
+    objRs.Open strUpdateStatusQuery, objConn
+    
+    strCountQuery = "SELECT Count(*) FROM " & strAllocationTable & " WHERE Status='Skipped' AND Resource_Name='" & strResourceName & "';"
+    fnSkipCase = objConn.Execute(strCountQuery).Collect(0)
+    frmNewCase.clearForm
+    fnCloseDBConnection
+    Set objRs = Nothing
+    Set objConn = Nothing
+    
+End Function
+=============================================================================Update case details'
+Option Explicit
+
+Public Sub fnUpdateCaseDetails(strOldCustomerID As String)
+    
+    Dim objConn As Object
+    Dim objRs As Object
+
+    Dim strCustDetailsInsertQuery As String
+    Dim strDupCustDetailsInsertQuery As String
+    Dim strCustDetailsUpdateQuery As String
+    Dim strCountQuery As String
+    Dim strCaseStatusTable As String
+    Dim strAllocationTable As String
+    Dim strComments As String
+    Dim strExplanationForZ As String
+    Dim strReason As String
+    Dim strAllocationID As String
+    Dim strResourceName As String
+    
+    Dim intStatusID As Integer
+    Dim i As Integer
+    
+    
+    Dim varAllocationID As Variant
+    
+    Set objConn = fnDBConnect
+    Set objRs = CreateObject("ADODB.Recordset")
+    strCaseStatusTable = "AU_EC_Case_Status_Details"
+    strAllocationTable = "AU_EC_Allocation"
+    
+    strCountQuery = "SELECT COUNT(*) FROM " & strCaseStatusTable & ";"
+    intStatusID = objConn.Execute(strCountQuery).Collect(0) + 1
+    
+    strReason = frmNewCase.cmbEscalationReason
+    strComments = frmNewCase.txtComments
+    strExplanationForZ = frmNewCase.txtExplanationForZ
+    varAllocationID = fnAllocationID(strOldCustomerID)
+    strResourceName = FullName
+    
+    strAllocationID = varAllocationID(0, 0)
+    
+    If strComments = "" And strExplanationForZ = "" And strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmNewCase.txtCompletedDate & "','" & strResourceName & "','" & frmNewCase.cmbCaseStatus & "','" & frmNewCase.cmbSiebelUploadStatus & "',null,null,null,'Completed'," & strAllocationID & ");"
+    
+    If strComments = "" And strExplanationForZ = "" And Not strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmNewCase.txtCompletedDate & "','" & frmNewCase.cmbCaseStatus & "','" & frmNewCase.cmbSiebelUploadStatus & "','" & strReason & "',null,null,'Completed'," & strAllocationID & ");"
+    
+    If strComments = "" And Not strExplanationForZ = "" And strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmNewCase.txtCompletedDate & "','" & frmNewCase.cmbCaseStatus & "','" & frmNewCase.cmbSiebelUploadStatus & "',null,null,'" & strExplanationForZ & "','Completed'," & strAllocationID & ");"
+    
+    If strComments = "" And Not strExplanationForZ = "" And Not strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmNewCase.txtCompletedDate & "','" & frmNewCase.cmbCaseStatus & "','" & frmNewCase.cmbSiebelUploadStatus & "','" & strReason & "',null,'" & strExplanationForZ & "','Completed'," & strAllocationID & ");"
+    
+    If Not strComments = "" And strExplanationForZ = "" And strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmNewCase.txtCompletedDate & "','" & frmNewCase.cmbCaseStatus & "','" & frmNewCase.cmbSiebelUploadStatus & "',null,'" & strComments & "',null,'Completed'," & strAllocationID & ");"
+    
+    If Not strComments = "" And strExplanationForZ = "" And Not strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmNewCase.txtCompletedDate & "','" & frmNewCase.cmbCaseStatus & "','" & frmNewCase.cmbSiebelUploadStatus & "','" & strReason & "','" & strComments & "',null,'Completed'," & strAllocationID & ");"
+    
+    If Not strComments = "" And Not strExplanationForZ = "" And strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmNewCase.txtCompletedDate & "','" & frmNewCase.cmbCaseStatus & "','" & frmNewCase.cmbSiebelUploadStatus & "',null,'" & strComments & "','" & strExplanationForZ & "','Completed'," & strAllocationID & ");"
+    
+    If Not strComments = "" And Not strExplanationForZ = "" And Not strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmNewCase.txtCompletedDate & "','" & frmNewCase.cmbCaseStatus & "','" & frmNewCase.cmbSiebelUploadStatus & "','" & strReason & "','" & strComments & "','" & strExplanationForZ & "','Completed'," & strAllocationID & ");"
+    
+    objRs.Open strCustDetailsInsertQuery, objConn
+    
+    If UBound(varAllocationID, 2) <> 0 Then
+        For i = 1 To UBound(varAllocationID, 2)
+            intStatusID = intStatusID + 1
+            strDupCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmNewCase.txtCompletedDate & "','" & frmNewCase.cmbCaseStatus & "','" & frmNewCase.cmbSiebelUploadStatus & "',null,null,null,'Cancelled'," & varAllocationID(0, i) & ");"
+            objRs.Open strDupCustDetailsInsertQuery, objConn
+        Next i
+    End If
+    
+    strCustDetailsUpdateQuery = "UPDATE " & strAllocationTable & " SET Customer_ID='" & frmNewCase.txtCustomerID.Value & "',ASW_Case_ID='" & frmNewCase.txtPegaCaseID.Value & "',Case_Reason_Code='" & frmNewCase.txtCaseReasonCode.Value & "' WHERE AU_EC_Allocation.Allocation_ID=" & strAllocationID & ";"
+
+    objRs.Open strCustDetailsUpdateQuery, objConn
+    
+    MsgBox "Case Submitted Successfully.", vbInformation
+    
+    frmNewCase.clearForm
+    frmNewCase.autoPopulate
+    
+    fnCloseDBConnection
+    Set objRs = Nothing
+    Set objConn = Nothing
+    
+End Sub
+
+Public Sub fnUpdateExistingCaseDetails(strCustomerID As String)
+    
+    Dim objConn As Object
+    Dim objRs As Object
+
+    Dim strCustDetailsInsertQuery As String
+    Dim strDupCustDetailsInsertQuery As String
+    Dim strSelectAllocationIDQuery As String
+    Dim strCountQuery As String
+    Dim strCaseStatusTable As String
+    Dim strAllocationTable As String
+    Dim strComments As String
+    Dim strExplanationForZ As String
+    Dim strReason As String
+    Dim strAllocationID As String
+    Dim strPegaCaseId As String
+    Dim strResourceName As String
+    
+    Dim intStatusID As Integer
+    Dim i As Integer
+    
+    
+    Dim varAllocationID As Variant
+    
+    Set objConn = fnDBConnect
+    Set objRs = CreateObject("ADODB.Recordset")
+    strCaseStatusTable = "AU_EC_Case_Status_Details"
+    strAllocationTable = "AU_EC_Allocation"
+    
+    strCountQuery = "SELECT COUNT(*) FROM " & strCaseStatusTable & ";"
+    intStatusID = objConn.Execute(strCountQuery).Collect(0) + 1
+    
+    strPegaCaseId = frmUpdateCase.txtPegaCaseIDUpdate
+    strReason = frmUpdateCase.cmbEscalationReasonUpdate
+    strComments = frmUpdateCase.txtCommentsUpdate
+    strExplanationForZ = frmUpdateCase.txtExplanationForZUpdate
+    strResourceName = FullName
+    
+    strSelectAllocationIDQuery = "SELECT AU_EC_Allocation.Allocation_ID FROM " & strAllocationTable & " WHERE AU_EC_Allocation.Customer_ID='" & strCustomerID & "' AND AU_EC_Allocation.ASW_Case_ID='" & strPegaCaseId & "';"
+    objRs.Open strSelectAllocationIDQuery, objConn
+    varAllocationID = objRs.getrows
+    If IsEmpty(varAllocationID) Then Exit Sub
+    objRs.Close
+        
+    strAllocationID = varAllocationID(0, 0)
+    
+    If strComments = "" And strExplanationForZ = "" And strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmUpdateCase.txtCompletedDateUpdate & "','" & strResourceName & "','" & frmUpdateCase.cmbCaseStatusUpdate & "','" & frmUpdateCase.cmbSiebelUploadStatusUpdate & "',null,null,null,'Completed'," & strAllocationID & ");"
+    
+    If strComments = "" And strExplanationForZ = "" And Not strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmUpdateCase.txtCompletedDateUpdate & "','" & frmUpdateCase.cmbCaseStatusUpdate & "','" & frmUpdateCase.cmbSiebelUploadStatusUpdate & "','" & strReason & "',null,null,'Completed'," & strAllocationID & ");"
+    
+    If strComments = "" And Not strExplanationForZ = "" And strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmUpdateCase.txtCompletedDateUpdate & "','" & frmUpdateCase.cmbCaseStatusUpdate & "','" & frmUpdateCase.cmbSiebelUploadStatusUpdate & "',null,null,'" & strExplanationForZ & "','Completed'," & strAllocationID & ");"
+    
+    If strComments = "" And Not strExplanationForZ = "" And Not strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmUpdateCase.txtCompletedDateUpdate & "','" & frmUpdateCase.cmbCaseStatusUpdate & "','" & frmUpdateCase.cmbSiebelUploadStatusUpdate & "','" & strReason & "',null,'" & strExplanationForZ & "','Completed'," & strAllocationID & ");"
+    
+    If Not strComments = "" And strExplanationForZ = "" And strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmUpdateCase.txtCompletedDateUpdate & "','" & frmUpdateCase.cmbCaseStatusUpdate & "','" & frmUpdateCase.cmbSiebelUploadStatusUpdate & "',null,'" & strComments & "',null,'Completed'," & strAllocationID & ");"
+    
+    If Not strComments = "" And strExplanationForZ = "" And Not strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmUpdateCase.txtCompletedDateUpdate & "','" & frmUpdateCase.cmbCaseStatusUpdate & "','" & frmUpdateCase.cmbSiebelUploadStatusUpdate & "','" & strReason & "','" & strComments & "',null,'Completed'," & strAllocationID & ");"
+    
+    If Not strComments = "" And Not strExplanationForZ = "" And strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmUpdateCase.txtCompletedDateUpdate & "','" & frmUpdateCase.cmbCaseStatusUpdate & "','" & frmUpdateCase.cmbSiebelUploadStatusUpdate & "',null,'" & strComments & "','" & strExplanationForZ & "','Completed'," & strAllocationID & ");"
+    
+    If Not strComments = "" And Not strExplanationForZ = "" And Not strReason = "" Then strCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & strResourceName & "','" & frmUpdateCase.txtCompletedDateUpdate & "','" & frmUpdateCase.cmbCaseStatusUpdate & "','" & frmUpdateCase.cmbSiebelUploadStatusUpdate & "','" & strReason & "','" & strComments & "','" & strExplanationForZ & "','Completed'," & strAllocationID & ");"
+     
+    objRs.Open strCustDetailsInsertQuery, objConn
+    
+'    If UBound(varAllocationID, 2) <> 0 Then
+'        For i = 1 To UBound(varAllocationID, 2)
+'            intStatusID = intStatusID + 1
+'            strDupCustDetailsInsertQuery = "Insert Into " & strCaseStatusTable & " VALUES(" & intStatusID & ",'" & frmUpdateCase.txtCompletedDateUpdate & "','" & frmUpdateCase.cmbCaseStatusUpdate & "','" & frmUpdateCase.cmbSiebelUploadStatusUpdate & "',null,null,null,'Cancelled'," & strAllocationID & ");"
+'            objRs.Open strDupCustDetailsInsertQuery, objConn
+'        Next i
+'    End If
+    
+'    strCustDetailsUpdateQuery = "UPDATE " & strAllocationTable & " SET Customer_ID='" & frmUpdateCase.txtCustomerIDUpdate.Value & "',ASW_Case_ID='" & frmUpdateCase.txtPegaCaseIDUpdate.Value & "',Case_Reason_Code='" & frmUpdateCase.txtCaseReasonCodeUpdate.Value & "' WHERE AU_EC_Allocation.Allocation_ID=" & strAllocationID & ";"
+'
+'    objRs.Open strCustDetailsUpdateQuery, objConn
+'
+    MsgBox "Case Submitted Successfully.", vbInformation
+    
+    frmUpdateCase.clearForm
+'    frmUpdateCase.autoPopulate
+    
+    fnCloseDBConnection
+    Set objRs = Nothing
+    Set objConn = Nothing
+    
+End Sub
+Private Function fnAllocationID(strOldCustomerID As String) As Variant
+    
+    Dim objConn As Object
+    Dim objRs As Object
+    
+    Dim strAllocationTable As String
+    Dim strSelectAllocationIDQuery As String
+    Dim strUpdateStatusQuery As String
+    
+    Dim varTemp As Variant
+    
+    Set objConn = fnDBConnect
+    Set objRs = CreateObject("ADODB.Recordset")
+    
+    strAllocationTable = "AU_EC_Allocation"
+    
+    strSelectAllocationIDQuery = "SELECT AU_EC_Allocation.Allocation_ID FROM " & strAllocationTable & " LEFT JOIN AU_EC_Case_Status_Details ON AU_EC_Allocation.Allocation_ID = AU_EC_Case_Status_Details.Allocation_ID WHERE AU_EC_Allocation.Customer_ID='" & strOldCustomerID & "' AND AU_EC_Allocation.Resource_Name='" & FullName & "' AND AU_EC_Case_Status_Details.Allocation_ID IS null;"
+    objRs.Open strSelectAllocationIDQuery, objConn
+    varTemp = objRs.getrows
+    objRs.Close
+    
+    strUpdateStatusQuery = "UPDATE " & strAllocationTable & " SET Status='Allocated' WHERE Status='Skipped' AND Customer_ID='" & strOldCustomerID & "';"
+    objRs.Open strUpdateStatusQuery, objConn
+
+    fnAllocationID = varTemp
+    
+    fnCloseDBConnection
+    Set objRs = Nothing
+    Set objConn = Nothing
+    
+End Function
+
+==================================================User environment
+
+Option Explicit
+
+Public Function UserID()
+    UserID = Environ$("UserName")
+End Function
+
+Public Function FullName() As String
+
+    Dim UserName As String
+    Dim LastName As String
+    Dim FirstName As String
+    
+    UserName = Application.UserName
+    LastName = Left(UserName, InStr(UserName, ",") - 1)
+    FirstName = Right(UserName, Len(UserName) - Len(LastName) - 1)
+    FullName = Trim(FirstName) '& " " & LastName
+
+End Function
+
+
+=======================================================================================
+					Worksheet
+=======================================================================================
+Option Explicit
+
+Private Sub Workbook_Open()
+On Error GoTo errorHandler
+
+    Sheets("Home_Page").Activate
+    Application.Calculation = xlCalculationAutomatic
+    
+errorHandler:
+If Err.Number <> 0 Then
+    MsgBox "Error Occurred. Plesae Contact to Admin.", vbExclamation
+    Err.Clear
+End If
+End Sub
+
+Private Sub btnNewCase_Click()
+On Error GoTo errorHandler
+   
+    Dim varCaseDetails As Variant
+    Dim varSkipCaseDetails As Variant
+
+    varCaseDetails = fnGetCaseDeatails
+
+    If IsEmpty(varCaseDetails) Then
+        varSkipCaseDetails = fnGetSkippedCases
+        If IsEmpty(varSkipCaseDetails) Then
+            MsgBox "No More Cases are Allocated For Source " & ThisWorkbook.Worksheets(1).cmbWorkingFile & ". Please Check Diffrent Source or Contact To Allocation Team.", vbInformation, "No Cases Allocated"
+            Exit Sub
+        Else
+            frmNewCase.Show vbModeless
+        End If
+    Else
+        frmNewCase.Show vbModeless
+    End If
+    
+errorHandler:
+If Err.Number <> 0 Then
+    MsgBox "Error Occurred. Plesae Contact to Admin.", vbExclamation
+    Err.Clear
+End If
+
+End Sub
+
+
+Private Sub btnUpdateCase_Click()
+On Error GoTo errorHandler
+
+    frmExistingCase.Show vbModeless
+    
+errorHandler:
+If Err.Number <> 0 Then
+    MsgBox "Error Occurred. Plesae Contact to Admin.", vbExclamation
+    Err.Clear
+End If
+End Sub
+===========================================================================================
+
+
+
+
+
+
