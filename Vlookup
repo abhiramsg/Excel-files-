@@ -1,0 +1,36 @@
+Sub ImportSheet()
+Dim MyWorkbookPath As String
+Dim MyWorkbookPath2 As String
+' Open an explorer to look for the workbook you want
+MyWorkbookPath = "\\svvin203rmz0001.global.anz.com\geethapa$\Desktop\MAcro\Source\Table1.xlsx"
+
+MyWorkbookPath2 = "\\svvin203rmz0001.global.anz.com\geethapa$\Desktop\MAcro\Source\Table2.xlsx"
+' If you dont click on "Cancel"
+'If MyWorkbookPath <> False  Then
+
+    ' Open the file
+    Set MyWorkbook = Workbooks.Open(MyWorkbookPath)
+    
+    ' Copy the first sheet as a new sheet, on the last position
+    MyWorkbook.Sheets(1).Select
+    MyWorkbook.Sheets(1).Copy After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.Count)
+    
+    ' Close the workbook
+    MyWorkbook.Close False
+    ThisWorkbook.Activate
+    Set MyWorkbook = Workbooks.Open(MyWorkbookPath2)
+     MyWorkbook.Sheets(1).Select
+    MyWorkbook.Sheets(1).Copy After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.Count)
+    
+    MyWorkbook.Close False
+'End If
+
+End Sub
+Sub FINDSAL()
+Dim E_name As String
+Dim i As Integer
+Dim RRo
+E_name = Sheets(2).Range("A:A").Value
+Sal = Application.WorksheetFunction.VLookup(E_name, Sheet3.Range("B:D13"), 3, False)
+
+End Sub
