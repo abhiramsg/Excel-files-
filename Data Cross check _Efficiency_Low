@@ -1,0 +1,27 @@
+Public Sub subtest()
+' this will cross check data and paste to sheet 4
+
+    Dim c As Range
+    Dim d As Range
+    Worksheets("Sheet3").Activate
+    For Each c In Range("A1:A1048576")
+        For Each d In Worksheets("Sheet2").Range("A1:A1048576")
+            If c = "" And d = "" Then
+            Exit Sub
+            End If
+            
+            If c = d Then
+                c.Resize(1, 70).Copy
+                Sheets("Sheet4").Activate
+               
+                Worksheets("Sheet4").Range("A1048576").End(xlUp).Offset(1, 0).PasteSpecial Paste:=xlPasteValues
+                Exit For
+            End If
+        Next
+    Next
+    Application.CutCopyMode = False
+    Worksheets("Sheet4").Activate
+    'Range("A1").Select
+    'Worksheets("Sheet2").Activate
+    'Range("A1").Select
+End Sub
