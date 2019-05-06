@@ -1,0 +1,26 @@
+Option Explicit
+Sub Vlokup()
+Dim i As Variant, lastRowIndex As Integer, lastColumn As Integer
+Dim r As Variant
+Dim ws As Worksheet, ws2 As Worksheet
+Set ws = Sheets("Sheet2")
+Set ws2 = Sheets("Sheet3")
+lastRowIndex = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
+lastColumn = ws2.Cells(ws2.Columns.Count).End(xlToLeft).Column
+For r = 1 To lastColumn
+    Sheets("Sheet4").Cells(1, r).Value = Sheets("Sheet3").Cells(1, r)
+    Next r
+For i = 2 To lastRowIndex
+    Sheets("Sheet4").Cells(i, 1) = Application.WorksheetFunction.VLookup(Sheets("Sheet2").Cells(i, 1), Sheets("Sheet3").Range("A1:X200"), 1, False)
+    Sheets("Sheet4").Cells(i, 2) = Application.WorksheetFunction.VLookup(Sheets("Sheet2").Cells(i, 1), Sheets("Sheet3").Range("A1:X200"), 2, False)
+    Sheets("Sheet4").Cells(i, 3) = Application.WorksheetFunction.VLookup(Sheets("Sheet2").Cells(i, 1), Sheets("Sheet3").Range("A1:X200"), 3, False)
+    Sheets("Sheet4").Cells(i, 4) = Application.WorksheetFunction.VLookup(Sheets("Sheet2").Cells(i, 1), Sheets("Sheet3").Range("A1:X200"), 4, False)
+    
+Next i
+
+On Error GoTo ErrorHandler
+ErrorHandler:   MsgBox ("Execution Completed")
+                Exit Sub
+
+
+End Sub
