@@ -1,0 +1,38 @@
+Sub testdbknowledge()
+
+Dim dbacc As Object
+Dim Rs As Object
+Dim arr() As Variant
+Dim Dbpath As String, cnnstr As String, SQLQp As String
+Set dbacc = CreateObject("ADODB.connection")
+Dbpath = "C:\Users\User\Desktop\My project\Data base\DBMSaccdb.accdb"
+
+Dbpath = "C:\Users\User\Desktop\hai\EXCELDB.xlsx"
+cnnstr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Dbpath
+
+dbacc.Open cnnstr
+SQLQp = "SELECT * FROM Table1"
+Set Rs = dbacc.Execute(SQLQp)
+arr() = Rs.Getrows
+
+Dim ubunt As Integer, i As Integer, j As Integer
+
+ubunt = UBound(arr()) + 1
+i = 0
+j = 1
+For i = i To ubunt
+    
+    Sheets(2).Cells(j, 1).Value = arr(0, i)
+    Sheets(2).Cells(j, 2).Value = arr(1, i)
+    Sheets(2).Cells(j, 3).Value = arr(2, i)
+    Sheets(2).Cells(j, 4).Value = arr(3, i)
+    Sheets(2).Cells(j, 5).Value = arr(4, i)
+    Sheets(2).Cells(j, 6).Value = arr(5, i)
+    j = j + 1
+    
+    
+Next i
+
+dbacc.Close
+Set Rs = Nothing
+End Sub
