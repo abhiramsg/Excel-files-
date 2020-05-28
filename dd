@@ -59,3 +59,10 @@ End Sub
 
 
 https://stackoverflow.com/questions/24367399/excel-vba-custom-filter-using-named-range
+'ws.Range("B2:C" & lcol).AutoFilter Field:=2, Criteria1:=">=US625", Operator:=xlAnd, Criteria2:="<=US628"
+Num1 = "US625"
+'Num1 = Replace(Num1, """")
+Num2 = "US629"
+'Num2 = Replace(Num2, """")
+ws.Range("B2:C" & lcol).AutoFilter Field:=2, Criteria1:=">=" & Num1, Operator:=xlAnd, Criteria2:="<=" & Num2
+
