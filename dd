@@ -65,4 +65,4 @@ Num1 = "US625"
 Num2 = "US629"
 'Num2 = Replace(Num2, """")
 ws.Range("B2:C" & lcol).AutoFilter Field:=2, Criteria1:=">=" & Num1, Operator:=xlAnd, Criteria2:="<=" & Num2
-
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZWRlOWZjZmYtMWU0Ni00ZDYxLTkwMjctM2IwZDVhNzQ3OTFi%40thread.v2/0?context=%7b%22Tid%22%3a%229ea4e3a6-2908-4d01-ace7-ec35b1290b82%22%2c%22Oid%22%3a%22f26c821c-d2e1-4ec3-bcef-258ad8faed64%22%7d
